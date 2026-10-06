@@ -1,0 +1,53 @@
+# 招投标监控配置文件
+# 复制为 config.yaml 后修改
+
+# 监控的招投标网站列表
+sites:
+  - name: "中国政府采购网"
+    url: "http://www.ccgp.gov.cn/cggg/zygg/gkzb/"
+    # 列表页选择器（CSS 选择器）
+    list_selector: ".cList ul li"
+    # 标题选择器
+    title_selector: "a"
+    # 链接选择器
+    link_selector: "a"
+    # 发布时间选择器
+    date_selector: ".time"
+
+# 关键词筛选规则（匹配标题包含任意关键词即推送）
+keywords:
+  - "软件开发"
+  - "系统集成"
+  - "信息化"
+  - "运维服务"
+
+# 排除关键词（标题包含则跳过）
+exclude_keywords:
+  - "澄清"
+  - "变更"
+  - "废标"
+
+# 数据库配置
+database:
+  path: "bidding.db"
+
+# 通知配置
+notify:
+  # 邮件通知
+  email:
+    enabled: true
+    smtp_server: "smtp.163.com"
+    smtp_port: 465
+    sender: "nijidong@163.com"
+    password: "你的邮箱授权码"
+    receivers:
+      - "nijidong@163.com"
+
+  # 企业微信机器人通知
+  wecom:
+    enabled: false
+    webhook: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY"
+
+# 定时任务配置（每天执行几次）
+schedule:
+  hour: [9, 14, 18]   # 每天 9点、14点、18点 各跑一次
