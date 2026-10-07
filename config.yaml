@@ -1,0 +1,71 @@
+# 招投标监控配置文件
+
+# 监控的招投标网站列表
+sites:
+  - name: "红河职业技术学院-采购公告"
+    url: "https://www.hhvtc.cn/Subject/GGFW/index.html"
+    list_selector: "ul.subElem li"
+    title_selector: "span.aline_r"
+    link_selector: "a"
+    date_selector: "div.fontLightGray"
+    skip_filter: true   # 该站点所有公告都推送，不做关键词过滤
+
+  # 预留：云南省公共资源交易网（红河州）— 动态页面，后续适配API
+  # - name: "云南省公共资源交易网-红河州"
+  #   url: "https://ggzy.yn.gov.cn/ynggfwpt-home-web/#/tradeHall/tradeList?page=hh"
+
+# 关键词筛选规则（标题包含任意关键词即推送）
+keywords:
+  # 核心业务：监理和设计
+  - "监理"
+  - "设计"
+  - "勘察"
+  - "EPC"
+  - "总承包"
+  - "全过程咨询"
+  # 医院相关重点
+  - "医院"
+  - "卫生院"
+  - "医疗"
+  # 信息化相关
+  - "信息化"
+  - "软件"
+  - "系统集成"
+  - "智慧"
+  - "数字化"
+  - "运维"
+
+# 排除关键词（标题包含则跳过）
+exclude_keywords:
+  - "澄清"
+  - "变更"
+  - "废标"
+  - "中标"
+  - "成交"
+  - "结果公示"
+  - "候选人"
+
+# 数据库配置
+database:
+  path: "bidding.db"
+
+# 通知配置
+notify:
+  # 邮件通知
+  email:
+    enabled: false   # 暂时关闭，等配置好授权码再开启
+    smtp_server: "smtp.163.com"
+    smtp_port: 465
+    sender: "nijidong@163.com"
+    password: "你的邮箱授权码"
+    receivers:
+      - "nijidong@163.com"
+
+  # 企业微信机器人通知
+  wecom:
+    enabled: false
+    webhook: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY"
+
+# 定时任务配置（每天执行几次）
+schedule:
+  hour: [9, 14, 18]   # 每天 9点、14点、18点 各跑一次

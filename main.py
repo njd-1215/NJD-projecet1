@@ -36,8 +36,12 @@ def run_once():
             logger.info(f"{site_cfg['name']}：抓取到 {len(items)} 条记录")
 
             for item in items:
-                # 关键词过滤
-                if not match_keywords(item["title"], config):
+                # 关键词过滤（站点可配置 skip_filter: true 跳过关键词匹配，但排除词仍生效）
+                skip_filter = site_cfg.get("skip_filter", False)
+                if not skip_filter and not match_keywords(item["title"], config):
+                    continue
+                # 排除词始终生效
+                if is_excluded(item["title"], config):
                     continue
                 # 去重：已推送过的不再推送
                 if db.is_exists(item["url"]):
@@ -65,13 +69,18 @@ def run_once():
     logger.info("=== 本次执行结束 ===")
 
 
+def is_excluded(title, config):
+    """检查标题是否命中排除词"""
+    title = title.lower()
+    for kw in config.get("exclude_keywords", []):
+        if kw.lower() in title:
+            return True
+    return False
+
+
 def match_keywords(title, config):
     """检查标题是否匹配关键词规则"""
     title = title.lower()
-    # 排除词优先
-    for kw in config.get("exclude_keywords", []):
-        if kw.lower() in title:
-            return False
     # 匹配任意包含词
     for kw in config["keywords"]:
         if kw.lower() in title:

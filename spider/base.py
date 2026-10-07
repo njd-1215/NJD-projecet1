@@ -26,7 +26,9 @@ class BaseSpider:
                 continue
 
             title = title_el.get_text(strip=True)
-            link = urljoin(self.cfg["url"], title_el.get("href", ""))
+
+            link_el = row.select_one(self.cfg["link_selector"])
+            link = urljoin(self.cfg["url"], link_el.get("href", "")) if link_el else ""
 
             date_el = row.select_one(self.cfg.get("date_selector", ""))
             date = date_el.get_text(strip=True) if date_el else ""
