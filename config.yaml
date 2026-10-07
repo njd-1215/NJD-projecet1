@@ -63,8 +63,8 @@ notify:
 
   # 企业微信机器人通知
   wecom:
-    enabled: false
-    webhook: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY"
+    enabled: true
+    webhook: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=f63ff689-5c51-4ca5-aa7b-049edae7690b"
 
 # 定时任务配置（每天执行几次）
 schedule:
