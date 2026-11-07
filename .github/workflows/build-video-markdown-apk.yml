@@ -25,7 +25,7 @@ jobs:
         run: |
           mkdir -p android-work
           base64 --decode android/VideoMarkdown-Android-Source.tar.gz.b64 | tar -xz -C android-work
-          test -f android-work/videomarkdown-android/app/src/main/AndroidManifest.xml
+          test -f android-work/app/src/main/AndroidManifest.xml
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -45,13 +45,13 @@ jobs:
           gradle-version: "8.9"
 
       - name: Build debug APK
-        working-directory: android-work/videomarkdown-android
+        working-directory: android-work
         run: gradle --no-daemon assembleDebug
 
       - name: Upload installable APK
         uses: actions/upload-artifact@v4
         with:
           name: VideoMarkdown-Android-APK
-          path: android-work/videomarkdown-android/app/build/outputs/apk/debug/app-debug.apk
+          path: android-work/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
