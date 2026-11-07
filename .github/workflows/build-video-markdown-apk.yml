@@ -44,7 +44,7 @@ jobs:
       - name: Accept licenses and install Android 35 SDK
         shell: bash
         run: |
-          yes | "$SDKMANAGER" --licenses >/dev/null
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Set up Gradle 8.9
