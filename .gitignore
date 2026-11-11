@@ -25,6 +25,8 @@ env/
 *.sqlite3
 
 # Config (contains secrets)
+# config.yaml 由 config.example.yaml 复制而来，内含真实密钥，不得提交
+config.yaml
 config.local.yaml
 .env
 
